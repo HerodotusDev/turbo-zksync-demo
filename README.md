@@ -32,14 +32,14 @@ $ forge install && forge build
 
 ### Test
 
-To run the tests, you need to fork a network where the TurboSwap contract has been deployed and instantiate a TurboSwap contract from the deployed proxy address.
+To run the tests, you need to fork a network where the TurboSwap contract has been deployed and instantiate a TurboSwap contract from the deployed proxy address. Create a `.env` file based on `.env.example`.
 
 Also, accessed data must have been previously been proven on-chain.
 
 You may need to adapt `TurboAccountActivityChecker` to your needs.
 
 ```shell
-$ TURBO_SWAP_PROXY_ADDRESS=0x123 forge test --fork-url $FORK_URL
+$ source .env; forge test --fork-url $GOERLI_FORK_URL
 ```
 
 ## Deployed Contracts

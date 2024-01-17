@@ -13,8 +13,6 @@ contract TurboAccountActivityChecker_Test is Test {
 
     ITurboSwap public turboSwap;
 
-    address public account = makeAddr("alice");
-
     function setUp() public {
         address turboSwapProxyAddress = vm.envAddress(
             "TURBO_SWAP_PROXY_ADDRESS"
@@ -26,14 +24,46 @@ contract TurboAccountActivityChecker_Test is Test {
     }
 
     function test_proveAccountActivity() public {
+        address account = 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045;
         vm.startPrank(account);
 
-        activityChecker.proveAccountActivity(1, account, 1, 2);
+        uint256 startBlock = 10361998;
+        uint256 endBlock = 10361999;
+
+        activityChecker.proveAccountActivity(
+            block.chainid, // 5
+            account,
+            startBlock,
+            endBlock
+        );
 
         ITurboAccountActivityChecker.AccountState state = activityChecker
-            .getAccountState(account, 1, 2);
+            .getAccountState(account, startBlock, endBlock);
         assertTrue(state == ITurboAccountActivityChecker.AccountState.INACTIVE);
 
         vm.stopPrank();
+    }
+
+    function test_uncheckedAccount() public {
+        ITurboAccountActivityChecker.AccountState unknownState = activityChecker
+            .getAccountState(
+                makeAddr("bob"),
+                UINT256_MAX - 10,
+                UINT256_MAX - 9
+            );
+        assertTrue(
+            unknownState == ITurboAccountActivityChecker.AccountState.UNCHECKED
+        );
+    }
+
+    function test_revertProveAccountActivity() public {
+        vm.expectRevert("ERR_VALUE_IS_NULL");
+        // Accessing an invalid fact must make the call revert.
+        activityChecker.proveAccountActivity(
+            block.chainid, // 5
+            makeAddr("ghost"),
+            0,
+            1
+        );
     }
 }
