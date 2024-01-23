@@ -30,6 +30,14 @@ The Turbo interface is defined in `src/turbo/ITurboSwap.sol` alongside other use
 $ forge install && forge build
 ```
 
+### Deploy
+
+Add `TURBO_SWAP_PROXY_ADDRESS`, `ETHERSCAN_API_KEY`, `PRIVATE_KEY` and `RPC_URL` to your `.env` file and run:
+
+```shell
+$ source .env; forge script script/TurboAccountActivityChecker.s.sol:TurboAccountActivityCheckerDeployer --rpc-url $RPC_URL --broadcast --verify --watch
+```
+
 ### Test
 
 To run the tests, you need to fork a network where the TurboSwap contract has been deployed and instantiate a TurboSwap contract from the deployed proxy address. Create a `.env` file based on `.env.example`.
