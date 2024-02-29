@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.23;
+pragma solidity ^0.8.17;
+
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {ITurboAccountActivityChecker} from "./interfaces/ITurboAccountActivityChecker.sol";
 import {ITurboSwap} from "./turbo/interfaces/ITurboSwap.sol";
 
 import {Types} from "./turbo/Types.sol";
 
-contract TurboAccountActivityChecker is ITurboAccountActivityChecker {
-    ITurboSwap public immutable turboSwap;
+contract TurboAccountActivityChecker is ITurboAccountActivityChecker, Ownable {
+    ITurboSwap public turboSwap;
 
     mapping(address => mapping(uint256 => mapping(uint256 => AccountState)))
         public accountsToState;
@@ -16,6 +18,12 @@ contract TurboAccountActivityChecker is ITurboAccountActivityChecker {
 
     constructor(address turboSwapProxy) {
         turboSwap = ITurboSwap(turboSwapProxy);
+    }
+
+    function setTurboSwap(address newTurboSwap) external onlyOwner {
+        require(newTurboSwap != address(0), "Invalid address");
+
+        turboSwap = ITurboSwap(newTurboSwap);
     }
 
     /// Proves whether an EOA was active or inactive between a period of blocks

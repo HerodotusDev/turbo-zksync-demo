@@ -4,19 +4,19 @@ pragma solidity ^0.8.17;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 
-import {TurboAccountActivityChecker} from "../src/TurboAccountActivityChecker.sol";
+import {TurboHeaderChecker} from "../src/TurboHeaderChecker.sol";
 
-contract TurboAccountActivityCheckerDeployer is Script {
+contract TurboHeaderCheckerDeployer is Script {
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        TurboAccountActivityChecker checker = new TurboAccountActivityChecker(
+        TurboHeaderChecker checker = new TurboHeaderChecker(
             vm.envAddress("TURBO_SWAP_PROXY_ADDRESS")
         );
 
         console2.log(
-            "Deployed TurboAccountActivityChecker at address: %s",
+            "Deployed TurboHeaderChecker at address: %s",
             address(checker)
         );
 

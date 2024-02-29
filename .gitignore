@@ -133,3 +133,7 @@ cache
 
 broadcast/
 cache/
+
+zkout
+artifacts-zk
+cache-zk

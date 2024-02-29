@@ -1,20 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.23;
+pragma solidity ^0.8.17;
 
 import {Types} from "../Types.sol";
 
 import {IFactsRegistry} from "../interfaces/IFactsRegistry.sol";
 
 enum HeaderProperty {
-    TIMESTAMP,
-    STATE_ROOT,
-    RECEIPTS_ROOT,
-    TRANSACTIONS_ROOT,
-    GAS_USED,
-    BASE_FEE_PER_GAS,
     PARENT_HASH,
-    MIX_HASH
-    // ... & more
+    UNCLE_HASH,
+    COINBASE,
+    STATE_ROOT,
+    TRANSACTIONS_ROOT,
+    RECEIPTS_ROOT,
+    LOGS_BLOOM,
+    DIFFICULTY,
+    BLOCK_NUMBER,
+    GAS_LIMIT,
+    GAS_USED,
+    TIMESTAMP,
+    EXTRA_DATA,
+    MIX_HASH,
+    NONCE,
+    BASE_FEE_PER_GAS,
+    WITHDRAWALS_ROOT,
+    BLOB_GAS_USED,
+    EXCESS_BLOB_GAS,
+    PARENT_BEACON_BLOCK_ROOT
 }
 
 interface ITurboSwap {
