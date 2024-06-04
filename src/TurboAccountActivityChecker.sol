@@ -16,7 +16,7 @@ contract TurboAccountActivityChecker is ITurboAccountActivityChecker, Ownable {
 
     error UnsupportedAccountType();
 
-    constructor(address turboSwapProxy) {
+    constructor(address turboSwapProxy) Ownable(msg.sender) {
         turboSwap = ITurboSwap(turboSwapProxy);
     }
 
